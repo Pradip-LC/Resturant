@@ -202,7 +202,7 @@ def delete(item_id):
         db.session.delete(item)
         db.session.commit()
         return redirect(url_for('Menu'))
-
+""""
 @app.route('/edit/<int:item_id>',methods=['GET','POST'])
 def edit(item_id):
     if 'Account' not in session or session['Role']!='resturant':
@@ -216,7 +216,7 @@ def edit(item_id):
             db.session.commit()
             return redirect(url_for('Menu'))
         return render_template('Resturant/edit.html',item=item)
-
+"""
 @app.route('/Orders')
 def Orders():
     if 'Account' not in session or session['Role']!='resturant':
