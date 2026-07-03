@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<HTMl>
+    <HEAd>
+        <TITle>
+        </TITle>
+        <STYLE>
+            .container {
+                align-content: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items : center;
+            }
+            .login { 
+                justify-content: center;
+                align-items : center;
+            }
+            form{
+                border:1px solid black;
+                width: 200px;
+                padding: 10px;
+            } 
+        </STYLe>
+    </HEAd>
+    <BODy>
+        <div class="container">
+            <h1>LOGIN</h1>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div style="color: red; margin-bottom: 15px;">
+                    {% for message in messages %}
+                        <p><strong>{{ message }}</strong></p>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <div class="login">
+                <Form action="/login" method="post" id="login">
+                    <legend>UserName</legend>
+                    <INPUT TYPE="TEXT" NAME="name">
+                    <legend>Password</legend>
+                    <INPUT TYPE="password" NAME="password">
+                    <INPUT TYPE="submit"  VALUE="Login" > 
+                    <a href="{{url_for('signupUSR')}}"><INPUT TYPE="button" VALUE="Sign Up"></a>
+                </Form>
+            </div>
+            <div>
+                <a href="{{url_for('reset')}}"><u>forgot password</u></a>
+            </div>
+        </div>
+    </BODy>
+</HTMl>

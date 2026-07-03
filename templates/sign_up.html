@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>Sign Up</title>
+        <script src="{{url_for('static', filename='javaScript/signup.js')}}" defer></script>
+        <style>
+            .wrapper{
+                align-content: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items : center;
+            }
+            .signup{
+                border:1px solid black;
+                padding: 10px;
+                width: 200px;
+            }
+            legend{
+                padding-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="tabs-container">
+
+                <ul aria-labelledby="tabs-title">
+                    <li><a id="tab-1" href="#user"><h1>User</h1></a></li>
+                    <li><a id="tab-2" href="#resturant"><h1>Resturant</h1></a></li>            
+                </ul>
+                <div class="tabs__panels flow">
+                    <div id="user" aria-labelledby="tab-1">
+                        <form action="{{ url_for('signupUSR')}}" method="POST" class="signup" >
+                            <legend>UserName</legend>
+                            <input name="name" type="text">
+                            <legend>Email address</legend>
+                            <input name="email" type="email">
+                            <legend>Contact Number</legend>
+                            <input name="phone" type="tel">
+                            <legend>Create Password</legend>
+                            <input name="password" type="password">
+                            <legend>Confirm Password</legend>
+                            <input name="confirm_password" type="password">
+                            <input name="submit" type="submit">
+                        </form>
+                    </div>
+                    <div id="resturant" aria-labelledby="tab-2">
+                        <form action="{{ url_for('signupRES')}}" method="POST" class="signup">
+                            <legend>Name of Resturant</legend>
+                            <input name="resturant_name" type="text">
+                            <legend>Email address</legend>
+                            <input name="email" type="email">
+                            <legend>Contact Number</legend>
+                            <input name="phone" type="tel">
+                            <legend>Address</legend>
+                            <input name="address" type="text">
+                            <legend>Create Password</legend>
+                            <input name="password" type="password">
+                            <legend>Confirm Password</legend>
+                            <input name="confirm_password" type="password">
+                            <input name="submit" type="submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div style="color: red; margin-bottom: 15px;">
+                    {% for message in messages %}
+                        <p><strong>{{ message }}</strong></p>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </body>
+</html>

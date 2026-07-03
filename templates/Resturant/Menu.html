@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<head>
+  <title>Dashboard</title>
+  <Style>
+    *{
+      margin: 0px;
+      padding: 0px;
+    }
+    .main_container{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100vh;
+    }
+    .header{
+      display: flex;
+      flex-direction: row;
+      overflow: none;
+      width: 100%;
+      height: 10vh;
+    }
+    .main{
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      height: 80vh;
+    }
+    .sidebar{
+      display: flex;
+      flex-direction: column;
+      width: 20%;
+      background-color: rgb(18, 33, 172);
+    }
+    .sidebar hr{
+      margin-left: 20%;
+      margin-right: 20%;
+    }
+    .sidebar button{
+      border: 1px solid rgb(0, 0, 0);
+      border-radius: 5%;
+      height: 50px;
+      width: 200px;
+      background-color: rgb(153, 240, 247);
+      margin:auto;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .sidebar u{
+      color: white;
+    }
+    .content{
+      display: flex;
+      flex-direction: row;
+      width: 80%;
+      background-color: rgb(216, 216, 216);
+    }
+    .Menu_header{
+      border: 1px solid black; text-align: center; width: 80%; height: 50px; margin-left: 50px; margin-top: 20px; margin-bottom: 20px;
+    }
+    .Menu_display{
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); overflow-y: scroll; gap: 20px; padding: 20px;
+    }
+    .item{
+      border: 1px solid black;border-radius: 8px;height: max-content;text-align: center;color: white;text-shadow: 1px 1px 4px black;display: flex;flex-direction: column;justify-content: flex-top;padding: 10px; overflow: hidden;
+    }
+    .footer{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      height: 10vh;
+      background-color: rgb(20, 97, 29);
+    }
+  </Style>
+</head>
+<body>
+    <div class="main_container">
+      <section class="header">
+        <div style="width: 20%; background-color: azure; align-content: center;"><h2">FOODbook</h2></div>
+        <div style="width: 80%; background-color: blanchedalmond; align-content: center; text-align: center;">sdsfsdf</div>
+      </section>
+
+      <div class="main">
+
+        <section class="sidebar">
+
+          <div style="height: 20%; text-align: center; display: flex; flex-direction: column;" >
+            <a href="{{ url_for('dashboard') }}"><button>Dashboard</button></a>
+            <a href="{{ url_for('report') }}"><button>Report</button></a>
+          
+            <a href="{{ url_for('Menu') }}"><button>Manage menu</button></a>
+            <a href="{{ url_for('Orders') }}"><button>Orders</button></a>
+            <a href="{{ url_for('profile') }}"><button>Profile</button></a>
+            <a href="{{ url_for('logout') }}"><u>Logout</u></a>
+         
+          </div width="60%" color="black">
+
+        </section>
+
+        <div class="content">
+    
+          <div class="Menu" style="display:flex; flex-direction: column; width: 60%;">
+
+            <div class="Menu_header">
+              <h2>Manage menu</h2>
+            </div>
+
+              
+            <div class="Menu_display">
+              {%for MenuItem in items%}
+                <div class="item">
+                  <h2 style="margin: 0;">{{ MenuItem.name }}</h2>
+                  <p style="margin: 5px 0;"><strong>${{ MenuItem.price }}</strong></p>
+                  <p style="margin: 0; font-size: 0.9em;">{{ MenuItem.description }}</p>
+                  <a href="/delete/{{MenuItem.id}}"><button name="Delete" style="width: 50px;">Delete</button></a>
+                  <a href="/edit/{{MenuItem.id}}"><button name="Edit" style="width: 50px;">Edit</button></a>
+                </div>
+              {%endfor%}
+            </div>
+          </div>
+
+          
+          <div class="add_item" style="width: 40%; margin-top: 20px; display: flex; flex-direction: column;">
+            <div>
+              <legend>Add New item</legend>
+              <form class="add_menu" method="POST" action="{{ url_for('Menu') }}" style="display: flex; flex-direction: column; border: 1px solid black; margin-top:20px;">
+                <input type="text" name="item_name" placeholder="Item name">
+                <input type="number" name="item_price" placeholder="Item price">
+                <input type="text" name="item_description" placeholder="Item description">
+                <input type="file" name="image" placeholder="Image url">
+                <input type="submit" value="Add item">
+              </form>
+            </div>
+            
+            <div>
+              <legend>Edit item</legend>
+              <form class="edit_menu" method="POST" action="/edit/{{MenuItem.id}}" style="display: flex; flex-direction: column; border: 1px solid black; margin-top:20px;">
+                <input type="text" name="item_name" placeholder="{{MenuItem.name}}">
+                <input type="number" name="item_price" placeholder="{{MenuItem.price}}">
+                <input type="text" name="item_description" placeholder="{{MenuItem.description}}">
+                <input type="file" name="image" placeholder="Image url">
+                <input type="submit" value="Add item">
+              </form>
+            </div>
+          </div>
+
+        
+        </div>
+
+      </div>
+
+      <section class="footer">
+        SASDFSDFSD
+      </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='CSSS/Uhome.css') }}">
+    </head>
+    <body>
+        <div class="main_container">
+
+                <section class="header">
+                        <div style="width: 20%;"><h1>FOODbook</h1></div>
+                        <div style="width: 50%;"></div>
+                        <div class="header-right">
+                            <div style="width: 60%;">
+                                <Input type="text" placeholder="Search" class="search_bar">
+                            </div>
+                            <div style="width: 20%;"><a href ="{{ url_for('cart')}}"><img src="{{ url_for('static', filename='image/Cart.png') }}" height="50px" alt="CART"></a></div>
+                            <div class="profile-pic"><a href ="{{ url_for('profile')}}"><img src="{{ url_for('static', filename='image/user_logo.jpg') }}" alt="user profile"></a></div>
+                        </div>
+                </section>
+
+                <section class="main">
+                    <div style="width: 20%;"></div>
+                    <div style="width: 60%;">
+                        <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+                    </div>
+                    <div style="width: 20%;" ></div>
+                </section>
+                
+                <section class="footer">
+                    <div style="width: 20%;">FOODbook</div>
+                    <div style="width: 60%;">COPYRIGHT</div>
+                    <div style="width: 20%;">SOCIALS</div>
+                </section>
+        </div>
+    </body>
+</html>
