@@ -135,9 +135,9 @@
             <div>
               <legend>Edit item</legend>
               <form class="edit_menu" method="POST" action="/edit/{{MenuItem.id}}" style="display: flex; flex-direction: column; border: 1px solid black; margin-top:20px;">
-                <input type="text" name="item_name" placeholder="{{MenuItem.name}}">
-                <input type="number" name="item_price" placeholder="{{MenuItem.price}}">
-                <input type="text" name="item_description" placeholder="{{MenuItem.description}}">
+                <input type="text" name="item_name" placeholder="{{name}}">
+                <input type="number" name="item_price" placeholder="{{price}}">
+                <input type="text" name="item_description" placeholder="{{description}}">
                 <input type="file" name="image" placeholder="Image url">
                 <input type="submit" value="Add item">
               </form>
