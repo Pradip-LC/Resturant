@@ -1,11 +1,13 @@
 from flask import Flask, render_template, url_for, redirect,session, request,flash
 from flask_mysqldb import MySQL
-from sqlalchemy import func
+from sqlalchemy import func, SQLAlchemy
+from flask_migrate import Migrate
 from database.models import db, MenuItem, Payment, ResturantOwner, User, Order, OrderItem
 
 app = Flask(__name__)
 app.secret_key = '324^%^&67ghuagd^&%^&#$&*6876q3ggsad78as6d'
 #database
+db = SQLAlchemy()
 try:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/foodbook'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -226,6 +228,10 @@ def Orders():
 
 
 if __name__ == '__main__':
+    
+    with app.app_context():
+        db.create_all()
+
     app.run(debug=True)
 
  
