@@ -163,7 +163,7 @@
                   <input type="number" name="item_price" id="edit_item_price" step="0.01">
                   <br><br>
                   <label>Description:</label>
-                  <input type="text" name="item_description" id="edit_item_description" step="0.01">
+                  <input type="text" name="item_description" id="edit_item_description" >
                   <br><br>                   
                   <button type="submit">Save Changes</button>
                   <button type="button" onclick="closeEditForm()">Cancel</button>
@@ -182,24 +182,24 @@
     </div>
     <script>
       function openEditForm(button) {
-          // 1. Read the data attached to the button
+          //Read the data attached to the button
           const itemId = button.getAttribute('data-id');
           const itemName = button.getAttribute('data-name');
           const itemPrice = button.getAttribute('data-price');
           const itemdescription = button.getAttribute('data-description');
 
-          // 2. Paste that data into the hidden form's inputs
+          //Paste that data into the hidden forms inputs
           document.getElementById('edit_item_id').value = itemId;
           document.getElementById('edit_item_name').value = itemName;
           document.getElementById('edit_item_price').value = itemPrice;
           document.getElementById('edit_item_description').value = itemdescription;
 
-          // 3. Make the form visible
+          //Make form visible
           document.getElementById('editFormContainer').style.display = 'block';
         }
 
       function closeEditForm() {
-          // Hide the form again
+          //Hide the form
           document.getElementById('editFormContainer').style.display = 'none';
         }
     </script>
