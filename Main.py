@@ -1,13 +1,14 @@
 from flask import Flask, render_template, url_for, redirect,session, request,flash
 from flask_mysqldb import MySQL
-from sqlalchemy import func, SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+from extensions import db
+from sqlalchemy import func
 from flask_migrate import Migrate
 from database.models import db, MenuItem, Payment, ResturantOwner, User, Order, OrderItem
 
 app = Flask(__name__)
 app.secret_key = '324^%^&67ghuagd^&%^&#$&*6876q3ggsad78as6d'
 #database
-db = SQLAlchemy()
 try:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/foodbook'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -204,21 +205,24 @@ def delete(item_id):
         db.session.delete(item)
         db.session.commit()
         return redirect(url_for('Menu'))
-""""
-@app.route('/edit/<int:item_id>',methods=['GET','POST'])
-def edit(item_id):
+    
+@app.route('/edit-item',methods=['POST'])
+def edit():
     if 'Account' not in session or session['Role']!='resturant':
         return redirect(url_for('login'))
     else:
-        item = MenuItem.query.get_or_404(item_id)
-        if request.method=='POST':
-            item.name = request.form['item_name']
-            item.price = request.form['item_price']
-            item.description = request.form['item_description']
-            db.session.commit()
-            return redirect(url_for('Menu'))
-        return render_template('Resturant/edit.html',item=item)
-"""
+        item_id = request.form.get('item_id')
+        item_to_edit = MenuItem.query.get(item_id)
+
+        if item_to_edit and item_to_edit.resturant_id == session['Account']:
+            item_to_edit.id = item_id
+            item_to_edit.name = request.form['item_name']
+            item_to_edit.price = request.form['item_price']
+            item_to_edit.description = request.form['item_description']
+    
+        db.session.commit()
+    return redirect(url_for('Menu'))
+    
 @app.route('/Orders')
 def Orders():
     if 'Account' not in session or session['Role']!='resturant':

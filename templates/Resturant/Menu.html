@@ -55,13 +55,33 @@
       background-color: rgb(216, 216, 216);
     }
     .Menu_header{
-      border: 1px solid black; text-align: center; width: 80%; height: 50px; margin-left: 50px; margin-top: 20px; margin-bottom: 20px;
+      border: 1px solid black;
+      text-align: center; 
+      width: 80%; 
+      height: 50px; 
+      margin-left: 50px; 
+      margin-top: 20px; 
+      margin-bottom: 20px;
     }
     .Menu_display{
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); overflow-y: scroll; gap: 20px; padding: 20px;
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(150px, max-content)); 
+      overflow-y: scroll; 
+      gap: 20px; 
+      padding: 20px;
     }
     .item{
-      border: 1px solid black;border-radius: 8px;height: max-content;text-align: center;color: white;text-shadow: 1px 1px 4px black;display: flex;flex-direction: column;justify-content: flex-top;padding: 10px; overflow: hidden;
+      border: 1px solid black;
+      border-radius: 8px;
+      height: max-content; 
+      text-align: center;
+      color: white;
+      text-shadow: 1px 1px 4px black;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-top;
+      padding: 10px; 
+      overflow: hidden;
     }
     .footer{
       display: flex;
@@ -113,7 +133,7 @@
                   <p style="margin: 5px 0;"><strong>${{ MenuItem.price }}</strong></p>
                   <p style="margin: 0; font-size: 0.9em;">{{ MenuItem.description }}</p>
                   <a href="/delete/{{MenuItem.id}}"><button name="Delete" style="width: 50px;">Delete</button></a>
-                  <a href="/edit/{{MenuItem.id}}"><button name="Edit" style="width: 50px;">Edit</button></a>
+                  <button type="button" onclick="openEditForm(this)" data-id="{{ MenuItem.id }}" data-name="{{ MenuItem.name }}" data-price="{{ MenuItem.price }}" data-description="{{ MenuItem.description }}">EditIteem</button>
                 </div>
               {%endfor%}
             </div>
@@ -121,7 +141,7 @@
 
           
           <div class="add_item" style="width: 40%; margin-top: 20px; display: flex; flex-direction: column;">
-            <div>
+            <div class="add_menu_form">
               <legend>Add New item</legend>
               <form class="add_menu" method="POST" action="{{ url_for('Menu') }}" style="display: flex; flex-direction: column; border: 1px solid black; margin-top:20px;">
                 <input type="text" name="item_name" placeholder="Item name">
@@ -132,14 +152,21 @@
               </form>
             </div>
             
-            <div>
-              <legend>Edit item</legend>
-              <form class="edit_menu" method="POST" action="/edit/{{MenuItem.id}}" style="display: flex; flex-direction: column; border: 1px solid black; margin-top:20px;">
-                <input type="text" name="item_name" placeholder="{{name}}">
-                <input type="number" name="item_price" placeholder="{{price}}">
-                <input type="text" name="item_description" placeholder="{{description}}">
-                <input type="file" name="image" placeholder="Image url">
-                <input type="submit" value="Add item">
+            <div id="editFormContainer" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black; z-index: 1000;">
+              <h3>Edit Menu Item</h3>              
+              <form action="/edit-item" method="POST">
+                  <input type="hidden" name="item_id" id="edit_item_id">                  
+                  <label>Name:</label>
+                  <input type="text" name="item_name" id="edit_item_name">
+                  <br><br>               
+                  <label>Price:</label>
+                  <input type="number" name="item_price" id="edit_item_price" step="0.01">
+                  <br><br>
+                  <label>Description:</label>
+                  <input type="text" name="item_description" id="edit_item_description" step="0.01">
+                  <br><br>                   
+                  <button type="submit">Save Changes</button>
+                  <button type="button" onclick="closeEditForm()">Cancel</button>
               </form>
             </div>
           </div>
@@ -153,5 +180,28 @@
         SASDFSDFSD
       </section>
     </div>
+    <script>
+      function openEditForm(button) {
+          // 1. Read the data attached to the button
+          const itemId = button.getAttribute('data-id');
+          const itemName = button.getAttribute('data-name');
+          const itemPrice = button.getAttribute('data-price');
+          const itemdescription = button.getAttribute('data-description');
+
+          // 2. Paste that data into the hidden form's inputs
+          document.getElementById('edit_item_id').value = itemId;
+          document.getElementById('edit_item_name').value = itemName;
+          document.getElementById('edit_item_price').value = itemPrice;
+          document.getElementById('edit_item_description').value = itemdescription;
+
+          // 3. Make the form visible
+          document.getElementById('editFormContainer').style.display = 'block';
+        }
+
+      function closeEditForm() {
+          // Hide the form again
+          document.getElementById('editFormContainer').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
