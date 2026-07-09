@@ -95,7 +95,7 @@ def signupRES():
             return render_template('sign_up.html')
         else:
             try:
-                user = ResturantOwner(name=username,password=Password,address=address,is_active='',email=mail,phone=Phone,role='resturant')
+                user = ResturantOwner(name=username,pass_hass=Password,address=address,is_active='',email=mail,phone=Phone,role='resturant')
                 db.session.add(user)
                 db.session.commit()
                 return redirect(url_for('login'))
@@ -122,7 +122,15 @@ def home():
     if 'Account' not in session:
         return redirect(url_for('login'))
     else:
-        return render_template('User/User_home.html')
+        res = ResturantOwner.query.order_by(func.rand()).limit(3).all()
+
+        restaurant_menus = {}
+    for resturant in res:
+        items = MenuItem.query.filter_by(resturant_id=resturant.id).limit(3).all()
+        
+        restaurant_menus[resturant] = items
+
+    return render_template('User/User_home.html',restaurant_menus=restaurant_menus)
 
 #profile
 @app.route('/profile')
