@@ -132,8 +132,10 @@
                   <h2 style="margin: 0;">{{ MenuItem.name }}</h2>
                   <p style="margin: 5px 0;"><strong>${{ MenuItem.price }}</strong></p>
                   <p style="margin: 0; font-size: 0.9em;">{{ MenuItem.description }}</p>
-                  <a href="/delete/{{MenuItem.id}}"><button name="Delete" style="width: 50px;">Delete</button></a>
-                  <button type="button" onclick="openEditForm(this)" data-id="{{ MenuItem.id }}" data-name="{{ MenuItem.name }}" data-price="{{ MenuItem.price }}" data-description="{{ MenuItem.description }}">EditIteem</button>
+                  <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <a href="/delete/{{MenuItem.id}}"><button name="Delete" style="width: 50px;">Delete</button></a>
+                    <button type="button" onclick="openEditForm(this)" data-id="{{ MenuItem.id }}" data-name="{{ MenuItem.name }}" data-price="{{ MenuItem.price }}" data-description="{{ MenuItem.description }}" style="width: 50px;">Edit</button> 
+                  </div>
                 </div>
               {%endfor%}
             </div>
