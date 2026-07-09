@@ -23,26 +23,24 @@
                 <section class="main">
                     <div class="left-gap" style="width: 20%;"></div>
                     <div style="width: 60%;">
+                        {% for resturant, items in restaurant_menus.items() %}
                         <div class="Resturant_display" style="padding: 10px; border:3px solid black; border-radius: 5px; color: #ffffff; margin-top: 20px; background-color: black;">
-                            <lable>Resturant Name</lable>
-                            <div class="Resturant_menu_display" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); overflow: hidden; gap: 20px; padding: 20px; ">
-                                <div class="item_of_Resturant" style="padding: 10px; border:5px rgb(10, 47, 255); border-radius: 5px; color: rgb(0, 0, 0); background-color: white;">
-                                    <h2 style="margin: 0;">hazmola</h2>
-                                    <p style="margin: 5px 0;"><strong>Rs 35</strong></p>
-                                    <p style="margin: 0; font-size: 0.9em;">made of herbs and spices</p>
-                                </div>
-                                <div class="item_of_Resturant" style="padding: 10px; border:3px solid black; border-radius: 5px; color: rgb(0, 0, 0); background-color: white;">
-                                    <h2 style="margin: 0;">hazmola</h2>
-                                    <p style="margin: 5px 0;"><strong>Rs 35</strong></p>
-                                    <p style="margin: 0; font-size: 0.9em;">made of herbs and spices</p>
-                                </div>
-                                <div class="item_of_Resturant" style="padding: 10px; border:3px solid black; border-radius: 5px; color: rgb(0, 0, 0); background-color: white;">
-                                    <h2 style="margin: 0;">hazmola</h2>
-                                    <p style="margin: 5px 0;"><strong>Rs 35</strong></p>
-                                    <p style="margin: 0; font-size: 0.9em;">made of herbs and spices</p>
-                                </div>
+                            <lable>{{resturant.name}}</lable>
+                            <div class="Resturant_menu_display" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, max-content)); overflow: hidden; gap: 20px; padding: 20px; ">
+                                {% if items %}
+                                    {% for item in items %}
+                                        <div class="item_of_Resturant" style="padding: 10px; border:5px rgb(0, 0, 0); border-radius: 5px; color: rgb(0, 0, 0); background-color: white;">
+                                            <h2 style="margin: 0;">{{ item.name }}</h2>
+                                            <p style="margin: 5px 0;"><strong>${{ item.price }}</strong></p>
+                                            <p style="margin: 0; font-size: 0.9em;">{{ item.description }}</p>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                        <p>No items available</p>
+                                {% endif %}
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                     <div class="Right-gap" style="width: 20%;" ></div>
                 </section>
