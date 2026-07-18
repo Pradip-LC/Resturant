@@ -5,8 +5,7 @@
     </head>
     <body>
         <div class="main_container">
-
-                <section class="header">
+            <section class="header">
                         <div style="width: 20%;"><h1>FOODbook</h1></div>
                         <div style="width: 50%;">
                             <a href="{{ url_for('logout') }}"><button>Logout</button></a>
@@ -18,38 +17,38 @@
                             <div style="width: 20%;"><a href ="{{ url_for('cart')}}"><img src="{{ url_for('static', filename='image/Cart.png') }}" height="50px" alt="CART"></a></div>
                             <div class="profile-pic"><a href ="{{ url_for('profile')}}"><img src="{{ url_for('static', filename='image/user_logo.jpg') }}" alt="user profile"></a></div>
                         </div>
-                </section>
+            </section>
 
-                <section class="main">
-                    <div class="left-gap" style="width: 20%;"></div>
-                    <div style="width: 60%;">
-                        {% for resturant, items in restaurant_menus.items() %}
-                        <div class="Resturant_display" style="padding: 10px; border:3px solid black; border-radius: 5px; color: #ffffff; margin-top: 20px; background-color: black;">
-                            <lable>{{resturant.name}}</lable>
-                            <div class="Resturant_menu_display" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, max-content)); overflow: hidden; gap: 20px; padding: 20px; ">
-                                {% if items %}
-                                    {% for item in items %}
-                                        <div class="item_of_Resturant" style="padding: 10px; border:5px rgb(0, 0, 0); border-radius: 5px; color: rgb(0, 0, 0); background-color: white;">
-                                            <h2 style="margin: 0;">{{ item.name }}</h2>
-                                            <p style="margin: 5px 0;"><strong>${{ item.price }}</strong></p>
-                                            <p style="margin: 0; font-size: 0.9em;">{{ item.description }}</p>
-                                        </div>
-                                    {% endfor %}
-                                {% else %}
-                                        <p>No items available</p>
-                                {% endif %}
-                            </div>
+            <section class="main">
+                <div class="left-gap" style="width: 20%;"></div>
+                <div style="width: 60%;">
+                    {% for resturant, items in restaurant_menus.items() %}
+                    <div class="Resturant_display" style="padding: 10px; border:3px solid black; border-radius: 5px; color: #ffffff; margin-top: 20px; background-color: black;">
+                        <lable><a href="/resturant/{{resturant.id}}">{{resturant.name}}</a></lable>
+                        <div class="Resturant_menu_display" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, max-content)); overflow: hidden; gap: 20px; padding: 20px; ">
+                            {% if items %}
+                                {% for item in items %}
+                                    <div class="item_of_Resturant" style="padding: 10px; border:5px rgb(0, 0, 0); border-radius: 5px; color: rgb(0, 0, 0); background-color: white;">
+                                        <h2 style="margin: 0;">{{ item.name }}</h2>
+                                        <p style="margin: 5px 0;"><strong>${{ item.price }}</strong></p>
+                                        <p style="margin: 0; font-size: 0.9em;">{{ item.description }}</p>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                    <p>No items available</p>
+                            {% endif %}
                         </div>
-                        {% endfor %}
                     </div>
-                    <div class="Right-gap" style="width: 20%;" ></div>
-                </section>
+                    {% endfor %}
+                </div>
+                <div class="Right-gap" style="width: 20%;" ></div>
+            </section>
                 
-                <section class="footer">
-                    <div style="width: 20%;">FOODbook</div>
-                    <div style="width: 60%;">COPYRIGHT</div>
-                    <div style="width: 20%;">SOCIALS</div>
-                </section>
+            <section class="footer">
+                <div style="width: 20%;">FOODbook</div>
+                <div style="width: 60%;">COPYRIGHT</div>
+                <div style="width: 20%;">SOCIALS</div>
+            </section>
         </div>
     </body>
 </html>
