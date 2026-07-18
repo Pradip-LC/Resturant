@@ -1,10 +1,10 @@
-from flask import Flask, render_template, url_for, redirect,session, request,flash
+from flask import Flask, render_template, url_for, redirect, session, request,flash
 from flask_mysqldb import MySQL
 from flask_sqlalchemy import SQLAlchemy
 from extensions import db
 from sqlalchemy import func
 from flask_migrate import Migrate
-from database.models import db, MenuItem, Payment, ResturantOwner, User, Order, OrderItem
+from database.models import db, MenuItem, Payment, ResturantOwner, User, Order, OrderItem, Image, Cart
 
 app = Flask(__name__)
 app.secret_key = '324^%^&67ghuagd^&%^&#$&*6876q3ggsad78as6d'
@@ -55,8 +55,7 @@ def login():
               
     else:
         return render_template('login.html')
-    
-    
+       
 #signup(user and resturant owner)
 @app.route('/signupUSR',methods=['GET','POST'] )
 def signupUSR():
@@ -132,6 +131,16 @@ def home():
 
     return render_template('User/User_home.html',restaurant_menus=restaurant_menus)
 
+#ResPage
+@app.route('/resturant/<int:resturant_id>' ,methods=['GET' ,'POST'] )
+def resturant(resturant_id):
+    if 'Account' not in session:
+        return redirect(url_for('login'))
+    else:
+        resturant = ResturantOwner.query.get(resturant_id)
+        items = MenuItem.query.filter_by(resturant_id=resturant_id).all()
+    return render_template('User/resturant.html',resturant=resturant,items=items)
+
 #profile
 @app.route('/profile')
 def profile():
@@ -140,9 +149,27 @@ def profile():
     else:
         return render_template('profile.html')
 
+#addtocart
+@app.route('/additemtocart/<int:MenuItem_id>' ,methods=['GET' ,'POST'] )
+def additemtocart(MenuItem_id):
+    if 'Account' not in session or session['Role']!='user':
+        return redirect(url_for('login'))
+    else:
+        item = MenuItem.query.get(MenuItem_id)
+        cart = Cart.query.filter_by(users_id=session['Account'],items_id=item.id).first()
+        if cart:
+            cart.quantity += 1
+            db.session.commit()
+        elif item:
+            cart = Cart(users_id=session['Account'],items_id=item.id,quantity=1)
+            db.session.add(cart)
+            db.session.commit()
+        return redirect(url_for('resturant',resturant_id=item.resturant_id))
+
+#viewCart
 @app.route('/cart')
 def cart():
-    if 'Account' not in session:
+    if 'Account' not in session or session['Role']!='user':
         return redirect(url_for('login'))
     else:
         return render_template('User/cart.html')
