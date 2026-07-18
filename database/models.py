@@ -1,5 +1,6 @@
+# coding: utf-8
 from flask_sqlalchemy import SQLAlchemy
-from extensions import db
+
 
 db = SQLAlchemy()
 
@@ -11,6 +12,7 @@ class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     users_id = db.Column(db.ForeignKey('user.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     items_id = db.Column(db.ForeignKey('menu_item.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
+    quantity = db.Column(db.Integer, nullable=False)
 
     items = db.relationship('MenuItem', primaryjoin='Cart.items_id == MenuItem.id', backref='carts')
     users = db.relationship('User', primaryjoin='Cart.users_id == User.id', backref='carts')
@@ -33,7 +35,7 @@ class MenuItem(db.Model):
     resturant_id = db.Column(db.ForeignKey('resturant_owner.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     name = db.Column(db.String(225), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    is_available = db.Column(db.Integer, nullable=False)
+    is_available = db.Column(db.Integer)
     description = db.Column(db.Text, nullable=False)
     image_id = db.Column(db.ForeignKey('images.id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
 
